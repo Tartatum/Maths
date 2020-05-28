@@ -66,11 +66,11 @@ public class Automate {
 					System.out.println("Sortie du programme.");
 					return;
 				}
-				if (tabTransition[Integer.parseInt(trans[0])][listSymbs.indexOf(trans[1])] == "*")
-					tabTransition[Integer.parseInt(trans[0])][listSymbs.indexOf(trans[1])] = trans[2];
-				else {
-					tabTransition[Integer.parseInt(trans[0])][listSymbs
-							.indexOf(trans[1])] = tabTransition[Integer.parseInt(trans[0])][listSymbs.indexOf(trans[1])]
+				if (tabTransition[Integer.parseInt(trans[0]) - 1][listSymbs.indexOf(trans[1])] == "*") {
+					tabTransition[Integer.parseInt(trans[0]) - 1][listSymbs.indexOf(trans[1])] = trans[2];
+				} else {
+					tabTransition[Integer.parseInt(trans[0]) - 1][listSymbs.indexOf(
+							trans[1])] = tabTransition[Integer.parseInt(trans[0]) - 1][listSymbs.indexOf(trans[1])]
 									+ "," + trans[2];
 				}
 			}
@@ -84,7 +84,7 @@ public class Automate {
 
 	public void Affichage() {
 		System.out.println("---------- Affichage de l'automate ----------");
-		
+
 		for (int i = 0; i < nbrEtats; i++) {
 			System.out.println();
 			for (int j = 0; j < nbrsymbs; j++) {
