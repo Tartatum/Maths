@@ -21,6 +21,7 @@ public class Automate {
 		try {
 			System.out.println("---------- Création de l'automate ----------");
 			// Symboles
+			@SuppressWarnings("resource")
 			Scanner ligne = new Scanner(autoFile);
 			String[] tabsymb = ligne.nextLine().split(" ");
 			// System.out.println(tabsymb.length);
