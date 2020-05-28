@@ -3,6 +3,7 @@ package projet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -97,5 +98,12 @@ public class Automate {
 		}
 		System.out.println();
 		System.out.println();
+	}
+
+	@Override
+	public String toString() {
+		return "Automate [nbrsymbs=" + nbrsymbs + ", listSymbs=" + listSymbs + ", entrees=" + entrees + ", sorties="
+				+ sorties + ", nbrEtats=" + nbrEtats + ", nbrTrans=" + nbrTrans + ", tabTransition="
+				+ Arrays.toString(tabTransition) + "]";
 	}
 }
