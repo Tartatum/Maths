@@ -21,8 +21,10 @@ public class Main {
 				System.out.println("Le fichier éxiste.");
 				Automate original = new Automate(autoFile);
 				original.Affichage();
-
-			} else {
+				if(Determinisation_completion.est_un_automate_asynchrone(original)) {
+					Determinisation_completion.fermeture_epsilon(original);
+				};
+				} else {
 				System.out.println("Le fichier n'existe pas");
 			}
 		}
