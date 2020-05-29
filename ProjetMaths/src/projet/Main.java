@@ -21,10 +21,12 @@ public class Main {
 				System.out.println("Le fichier éxiste.");
 				Automate original = new Automate(autoFile);
 				original.Affichage();
-				Automate comp = Complementaire.Comp(original);
+
+				Determinisation_completion.algorithm(original);
+        Automate comp = Complementaire.Comp(original);
 				original.info();
 				comp.info();
-			} else {
+				} else { 
 				System.out.println("Le fichier n'existe pas");
 			}
 		}
