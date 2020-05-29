@@ -32,13 +32,30 @@ public class Automate implements Cloneable {
 
 	public Automate(Automate a) {
 		this.nbrsymbs = a.nbrsymbs;
-		this.listSymbs = a.listSymbs;
-		this.entrees = a.entrees;
-		this.sorties = a.sorties;
+		listSymbs = new ArrayList<String>();
+		for (String string : a.listSymbs) {
+			listSymbs.add(string);
+		}
+		entrees = new ArrayList<String>();
+		for (String string : a.entrees) {
+			entrees.add(string);
+		}
+		sorties = new ArrayList<String>();
+		for (String string : a.sorties) {
+			sorties.add(string);
+		}
 		this.nbrEtats = a.nbrEtats;
-		this.listEtats = a.listEtats;
+		listEtats = new ArrayList<String>();
+
+		for (String string : a.listEtats) {
+			listEtats.add(string);
+		}
 		this.nbrTrans = a.nbrTrans;
-		this.listTrans = a.listTrans;
+		listTrans = new ArrayList<String[]>();
+
+		for (String[] string : a.listTrans) {
+			listTrans.add(string);
+		}
 		this.tabTransition = a.tabTransition;
 	}
 
@@ -68,8 +85,8 @@ public class Automate implements Cloneable {
 			for (String ent : tabEtats) {
 				listEtats.add(ent);
 			}
-			//System.out.println("Rajout de l'�tat poubelle 'P'");
-			//listEtats.add("P");
+			// System.out.println("Rajout de l'�tat poubelle 'P'");
+			// listEtats.add("P");
 			nbrEtats = tabEtats.length;
 			// La liste des entr�es
 			entrees = new ArrayList<String>();
@@ -98,13 +115,13 @@ public class Automate implements Cloneable {
 					tabTransition[i][j] = "-";
 				}
 			}
-			//System.out.println("tabTransition : " + tabTransition.length);
+			// System.out.println("tabTransition : " + tabTransition.length);
 			listTrans = new ArrayList<String[]>();
 
 			for (int i = 1; i <= nbrTrans; i++) {
 				String ligneTrans = ligne.nextLine();
 				String[] trans = splitTrans(ligneTrans);
-				//System.out.println(" Trans : " +trans.length);
+				// System.out.println(" Trans : " +trans.length);
 
 				listTrans.add(trans); // la liste des transitions
 
@@ -114,15 +131,15 @@ public class Automate implements Cloneable {
 					System.out.println("Sortie du programme.");
 					return;
 				}
-				//System.out.println(listEtats.indexOf(trans[0]));
-				//System.out.println(listSymbs.indexOf(trans[1]));	
-				//System.out.println(tabTransition.length);
+				// System.out.println(listEtats.indexOf(trans[0]));
+				// System.out.println(listSymbs.indexOf(trans[1]));
+				// System.out.println(tabTransition.length);
 				if (tabTransition[listEtats.indexOf(trans[0])][listSymbs.indexOf(trans[1])] == "-") {
 					tabTransition[listEtats.indexOf(trans[0])][listSymbs.indexOf(trans[1])] = trans[2];
 				} else {
 					tabTransition[listEtats.indexOf(trans[0])][listSymbs.indexOf(
-							trans[1])] = tabTransition[listEtats.indexOf(trans[0])][listSymbs.indexOf(trans[1])]
-									+ "," + trans[2];
+							trans[1])] = tabTransition[listEtats.indexOf(trans[0])][listSymbs.indexOf(trans[1])] + ","
+									+ trans[2];
 				}
 			}
 			info();
@@ -133,20 +150,19 @@ public class Automate implements Cloneable {
 			System.exit(0);
 		}
 	}
-	
+
 	public String[] splitTrans(String ligne) {
-		String [] r = new String[3];
+		String[] r = new String[3];
 		String[] test;
 		for (String symb : listSymbs) {
 			if (symb.equals("*")) {
 				test = ligne.split("\\*");
-			}
-			else {
+			} else {
 				test = ligne.split(symb);
 			}
-			
-			if(test.length > 1) {
-				r= new String[] {test[0], symb, test[1]};
+
+			if (test.length > 1) {
+				r = new String[] { test[0], symb, test[1] };
 			}
 		}
 		return r;
@@ -154,53 +170,53 @@ public class Automate implements Cloneable {
 
 	public void Affichage() {
 		System.out.println("---------- Affichage de l'automate ----------");
-		String[][] format = new String[nbrEtats+1][nbrsymbs+1];
-		
+		String[][] format = new String[nbrEtats + 1][nbrsymbs + 1];
+
 		int max = 0;
-		for(int i = 1; i < nbrEtats+1; i++) {
-			if (listEtats.get(i-1).length() > max) {
-				max = listEtats.get(i-1).length();
+		for (int i = 1; i < nbrEtats + 1; i++) {
+			if (listEtats.get(i - 1).length() > max) {
+				max = listEtats.get(i - 1).length();
 			}
-			format[i][0] = "\n" + listEtats.get(i-1);
+			format[i][0] = "\n" + listEtats.get(i - 1);
 		}
-		
-		for(int i = 1; i < nbrEtats+1; i++) {
-			int diff = max - listEtats.get(i-1).length();
-			for(int k = 0; k < diff ; k++) {
+
+		for (int i = 1; i < nbrEtats + 1; i++) {
+			int diff = max - listEtats.get(i - 1).length();
+			for (int k = 0; k < diff; k++) {
 				format[i][0] += " ";
 			}
 		}
-		
+
 		format[0][0] = "\n";
-		for(int k = 0;k < max; k++) {
+		for (int k = 0; k < max; k++) {
 			format[0][0] += " ";
 		}
-		
-		for(int j = 1; j < nbrsymbs+1; j++) {
+
+		for (int j = 1; j < nbrsymbs + 1; j++) {
 			max = 0;
-			for(int i = 1; i < nbrEtats+1; i++) {
-				if (tabTransition[i-1][j-1].length() > max) {
-					max = tabTransition[i-1][j-1].length();
+			for (int i = 1; i < nbrEtats + 1; i++) {
+				if (tabTransition[i - 1][j - 1].length() > max) {
+					max = tabTransition[i - 1][j - 1].length();
 				}
 			}
-			for(int i = 1; i < nbrEtats+1; i++) {
-				format[i][j] = " | " + tabTransition[i-1][j-1];
-				if(tabTransition[i-1][j-1].length() < max) {
-					int diff = max - tabTransition[i-1][j-1].length();
-					for(int k = 0; k < diff ; k++) {
+			for (int i = 1; i < nbrEtats + 1; i++) {
+				format[i][j] = " | " + tabTransition[i - 1][j - 1];
+				if (tabTransition[i - 1][j - 1].length() < max) {
+					int diff = max - tabTransition[i - 1][j - 1].length();
+					for (int k = 0; k < diff; k++) {
 						format[i][j] += " ";
 					}
 				}
 			}
-			format[0][j] = " | " + listSymbs.get(j-1);
-			int diff = max - listSymbs.get(j-1).length();
-			for(int k = 0; k < diff; k++) {
+			format[0][j] = " | " + listSymbs.get(j - 1);
+			int diff = max - listSymbs.get(j - 1).length();
+			for (int k = 0; k < diff; k++) {
 				format[0][j] += " ";
 			}
 		}
 		String aff = "";
-		for(int i = 0; i < nbrEtats+1; i++) {
-			for(int j = 0; j < nbrsymbs+1; j++) {
+		for (int i = 0; i < nbrEtats + 1; i++) {
+			for (int j = 0; j < nbrsymbs + 1; j++) {
 				aff += format[i][j];
 			}
 		}
@@ -270,45 +286,42 @@ public class Automate implements Cloneable {
 		System.out.println("La liste des symboles : " + listSymbs);
 		System.out.print("La liste des entr�es : [");
 		int first = 1;
-		for(String e : entrees) {
-			if(first == 1) {
+		for (String e : entrees) {
+			if (first == 1) {
 				System.out.print(" {" + e + "}");
 				first = 0;
-			}
-			else {
+			} else {
 				System.out.print(", {" + e + "}");
 			}
 		}
 		first = 1;
 		System.out.println(" ]");
 		System.out.print("La liste des sorties : [");
-		for(String s : sorties) {
-			if(first == 1) {
+		for (String s : sorties) {
+			if (first == 1) {
 				System.out.print(" {" + s + "}");
 				first = 0;
-			}
-			else {
+			} else {
 				System.out.print(", {" + s + "}");
 			}
 		}
 		System.out.println(" ]");
 		first = 1;
 		System.out.println("Le nombre d'états : " + nbrEtats);
-		System.out.print("La liste des �tats : [" );
-		for(String l : listEtats) {
-			if(first == 1) {
+		System.out.print("La liste des �tats : [");
+		for (String l : listEtats) {
+			if (first == 1) {
 				System.out.print(" {" + l + "}");
 				first = 0;
-			}
-			else {
+			} else {
 				System.out.print(", {" + l + "}");
 			}
 		}
 		System.out.println(" ]");
 		System.out.println("Le nombre de transitions : " + nbrTrans);
 		System.out.println("La liste des transitions : ");
-		for(String[] trans : listTrans) {
-		 System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+		for (String[] trans : listTrans) {
+			System.out.println(trans[0] + " -> " + trans[1] + " -> " + trans[2]);
 		}
 
 	}

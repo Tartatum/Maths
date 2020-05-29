@@ -22,10 +22,8 @@ public class Main {
 				Automate original = new Automate(autoFile);
 				original.Affichage();
 
-				// Determinisation_completion.algorithm(original);
-				Automate comp = Complementaire.Comp(original);
-				original.info();
-				comp.info();
+				Automate deter = Determinisation_completion.algorithm(original);
+				Automate comp = Complementaire.Comp(deter);
 			} else {
 				System.out.println("Le fichier n'existe pas");
 			}
