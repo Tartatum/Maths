@@ -140,7 +140,8 @@ public class Determinisation_completion {
 	static Automate determinisation_et_completion_automate_asynchrone(Automate AF) {
 		// Obtient la liste des fermetures epsilons;
 		List<TreeSet<String>> ferm_ep = fermeture_epsilon(AF);
-		// Avoir l'�tat initial
+		// Avoir l'état initial
+
 		TreeSet<String> entree = new TreeSet<String>();
 		for (TreeSet<String> fe : ferm_ep) {
 			if(AF.contient_entree(fe)) {
@@ -149,7 +150,7 @@ public class Determinisation_completion {
 		}
 		//System.out.println(entree.toString());
 		
-		// D�terminisation  
+		// Déterminisation  
 		System.out.println("--- D�terminisation --- ");
 		HashSet<TreeSet<String>> etats = new HashSet<TreeSet<String>>();
 		HashSet<TreeSet<String>> etats_a_traiter = new HashSet<TreeSet<String>>();
@@ -168,7 +169,7 @@ public class Determinisation_completion {
 			tabEtats.add(ligne);
 			// Trouve les �tats suivants � partir de l'entr�e pour chaques symboles
 			for(int i = 0; i < AF.nbrsymbs-1; i++) {
-				// Contients l'�tat par le symbole
+				// Contients l'état par le symbole
 				TreeSet<String> etat_pro = new TreeSet<String>();
 				//TreeSet<Integer> etat_pro_check = new TreeSet<Integer>();
 				// Obitient la list des transitions contenant les entr�es et le symbole en transition 
@@ -202,17 +203,19 @@ public class Determinisation_completion {
 		//System.out.println("tabEtats : " + tabEtats);
 		
 		
-		// Recherche des entr�es
-		System.out.println("--- Recherche entr�e --- ");
+
+		// Recherche des entrées
+		System.out.println("--- Recherche entrée --- ");
 		HashSet<TreeSet<String>> entrees = new HashSet<TreeSet<String>>();
-		for(TreeSet<String> etat : listEtats) {
-			for(String i : AF.entrees) {
-				if(etat.contains(i)) {
-					entrees.add(etat);
-				}
-			}
-		}
-		System.out.println("Entrees : " + entrees);
+//		for(TreeSet<String> etat : listEtats) {
+//			for(String i : AF.entrees) {
+//				if(etat.contains(i)) {
+//					entrees.add(etat);
+//				}
+//			}
+//		}
+		entrees.add(entree);
+		//System.out.println("Entrees : " + entrees);
 		
 		// Recherche des sorties
 		System.out.println("--- Recherche sorties --- ");
@@ -224,7 +227,7 @@ public class Determinisation_completion {
 				}
 			}
 		}
-		System.out.println("Sorties : " + sorties);
+		//System.out.println("Sorties : " + sorties);
 		
 		
 		
@@ -259,7 +262,7 @@ public class Determinisation_completion {
 		for (String ent : AF.entrees) {
 			entree.add(ent);
 		}
-		// D�terminisation  
+		// Déterminisation  
 		HashSet<TreeSet<String>> etats = new HashSet<TreeSet<String>>();
 		HashSet<TreeSet<String>> etats_a_traiter = new HashSet<TreeSet<String>>();
 		List<TreeSet<String>> listEtats = new ArrayList<TreeSet<String>>();
@@ -275,7 +278,7 @@ public class Determinisation_completion {
 			tabEtats.add(ligne);
 			// Trouve les �tats suivants � partir de l'entr�e pour chaques symboles
 			for(int i = 0; i < AF.nbrsymbs; i++) {
-				// Contients l'�tat par le symbole
+				// Contients l'état par le symbole
 				TreeSet<String> etat_pro = new TreeSet<String>();
 				//TreeSet<Integer> etat_pro_check = new TreeSet<Integer>();
 				// Obitient la list des transitions contenant les entr�es et le symbole en transition 
@@ -304,15 +307,16 @@ public class Determinisation_completion {
 		//System.out.println("tabEtats : " + tabEtats);
 		
 		
-		// Recherche des entr�es
+		// Recherche des entrées
 		HashSet<TreeSet<String>> entrees = new HashSet<TreeSet<String>>();
-		for(TreeSet<String> etat : listEtats) {
-			for(String i : AF.entrees) {
-				if(etat.contains(i)) {
-					entrees.add(etat);
-				}
-			}
-		}
+		entrees.add(entree);
+//		for(TreeSet<String> etat : listEtats) {
+//			for(String i : AF.entrees) {
+//				if(etat.contains(i)) {
+//					entrees.add(etat);
+//				}
+//			}
+//		}
 		
 		//System.out.println("Entrees : " + entrees);
 		
@@ -448,7 +452,8 @@ public class Determinisation_completion {
 					List<String[]> listT = AF.transition_epsilon_commancant_par(checking);
 					if(listT.size() != 0) {
 						for(String[] trans : listT) {
-							// Si l'arriv� n'est pas d�j� pr�sent dans la fermeture, l'ajoute dans la verification
+
+							// Si l'arrivé n'est pas déjà présent dans la fermeture, l'ajoute dans la verification
 							if(!fer_epsi.contains(trans[2])) {
 								check.add(trans[2]);
 							}

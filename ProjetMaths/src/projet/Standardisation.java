@@ -1,6 +1,9 @@
 package projet;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Standardisation {
 	
@@ -13,7 +16,7 @@ public class Standardisation {
 			//test des transitions retour vers
 			for (int etat = 0; etat < a.nbrEtats; etat++) {
 				for (int symbNum = 0; symbNum < a.nbrsymbs; symbNum++) {
-					if (a.tabTransition[etat][symbNum] == a.entrees.get(0) + "") {
+					if (a.tabTransition[etat][symbNum].equals(a.entrees.get(0))) {
 						aucun_retour_sur_entree = false;
 					}
 				}
@@ -31,9 +34,9 @@ public class Standardisation {
 				new_arcs.add(new ArrayList<>());
 			}
 			//ajout des arcs partants des anciennes entrees
-			for (int etat : a.entrees) {
+			for (String etat : a.entrees) {
 				for (int symbNum = 0; symbNum < a.nbrsymbs; symbNum++) {
-					new_arcs.get(symbNum).add(a.tabTransition[etat][symbNum]);
+					new_arcs.get(symbNum).add(a.tabTransition[a.listEtats.indexOf(etat)][symbNum]);
 				}
 			}
 			//copie de l'ancien tableau de transition dans le nouveau
@@ -42,29 +45,45 @@ public class Standardisation {
 					tabTransition[etat][symbNum] = a.tabTransition[etat][symbNum];
 				}
 			}
+			
 			//remplissage du tableau pour la ligne de l'etat entrant rajoute
 			for (int symbNum = 0; symbNum < a.nbrsymbs; symbNum++) {
 				String new_arc = "";
+				String[] trans;
 				if (new_arcs.get(symbNum).size() > 0) {
 					new_arc += new_arcs.get(symbNum).get(0);
-					a.listTrans.add(a.nbrEtats + a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(0));
-					a.nbrTrans += 1;
-					for(int index = 1; index < new_arcs.get(symbNum).size(); index ++) {
-						new_arc += "," + new_arcs.get(symbNum).get(index);
-						a.listTrans.add(a.nbrEtats + a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(index));
+					trans = a.splitTrans("i" + a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(0));
+					if(!a.existe_in(trans)){
+						a.listTrans.add(a.splitTrans("i"+ a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(0)));
 						a.nbrTrans += 1;
+					}
+					for(int index = 1; index < new_arcs.get(symbNum).size(); index ++) {
+						if(!Arrays.stream(new_arc.split(";")).anyMatch(new_arcs.get(symbNum).get(index)::equals)) {
+							new_arc += ";" + new_arcs.get(symbNum).get(index);
+						}
+						trans = a.splitTrans("i" + a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(index));
+						if(!a.existe_in(trans)){
+							a.listTrans.add(a.splitTrans("i"+ a.listSymbs.get(symbNum) + new_arcs.get(symbNum).get(index)));
+							a.nbrTrans += 1;
+						}
 					}
 				}
 				
-				System.out.println(new_arc + "    " + a.nbrEtats + "     " + symbNum);
+				//System.out.println(new_arc + "    " + a.nbrEtats + "     " + symbNum);
 				tabTransition[a.nbrEtats][symbNum] = new_arc;
 				
 			}
-			
+//			HashSet<String[]> n = new HashSet<String[]>(a.listTrans);
+//			List<String[]> v = new ArrayList<String[]>();
+//			for (String[] e : n) {
+//				v.add(e);
+//			}
+//			a.listTrans = v;
+//			System.out.println(n.size());
 			a.entrees = new ArrayList<>();
-			a.entrees.add(a.nbrEtats + 1);
+			a.entrees.add("i");
 			a.nbrEtats += 1;
-			a.listEtats.add(a.nbrEtats + 1);
+			a.listEtats.add("i");
 			a.tabTransition = tabTransition;
 		}
 	}

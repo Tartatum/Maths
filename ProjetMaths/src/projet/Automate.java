@@ -293,6 +293,15 @@ public class Automate implements Cloneable {
 		}
 		return false;
 	}
+	
+	public boolean existe_in(String[] transTest) {
+		for (String[] trans : this.listTrans) {
+			if(trans[0].equals(transTest[0].trim()) && trans[1].equals(transTest[1].trim()) && trans[2].equals(transTest[2].trim())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public void info() {
 		System.out.println("Information sur l'automate :");
