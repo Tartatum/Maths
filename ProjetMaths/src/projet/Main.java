@@ -25,8 +25,8 @@ public class Main {
 				Automate deter = Determinisation_completion.algorithm(original);
 				Automate comp = Complementaire.Comp(deter);
 				Automate mini = Minimalisation.Minimal(deter);
-				deter.Affichage();
 				mini.Affichage();
+				deter.Affichage();
 			} else {
 				System.out.println("Le fichier n'existe pas");
 			}

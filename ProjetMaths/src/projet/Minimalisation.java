@@ -267,6 +267,16 @@ public class Minimalisation {
 			System.out.println("L'automate était déjà minimal");
 		}
 
+		System.out.println("Correspondance des états");
+		for (List<Integer> li : listGroupe) {
+			String nomgroupe = (String) groupe.get(li.get(0));
+			System.out.print("\n" + nomgroupe + " : ");
+			for (int i : li) {
+				String origine = (String) conversionIS.get(i);
+				System.out.print("{" + origine + "} ");
+			}
+		}
+		System.out.println();
 		Automate automateMin = new Automate(nbrsymbs, listSymbs, newentrees, newsorties, nbrEtats, listEtats, nbrTrans,
 				listTrans, tabTransition);
 		return automateMin;
