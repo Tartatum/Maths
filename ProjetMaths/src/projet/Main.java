@@ -18,15 +18,34 @@ public class Main {
 			File autoFile = new File(filename);
 
 			if (autoFile.exists()) {
+				
 				System.out.println("Le fichier éxiste.");
+				
 				Automate original = new Automate(autoFile);
 				original.Affichage();
 
 				Automate deter = Determinisation_completion.algorithm(original);
+				
 				Automate comp = Complementaire.Comp(deter);
+				System.out.println(" -- Comp -- ");
+				comp.info();
+				comp.Affichage();
+				
 				Automate mini = Minimalisation.Minimal(deter);
+				System.out.println(" -- Mini -- ");
+				mini.info();
 				mini.Affichage();
-				deter.Affichage();
+				
+				Automate copy = new Automate(deter);
+				System.out.println(" -- Stand -- ");
+				Standardisation.standardisation(copy);
+				copy.info();
+				copy.Affichage();
+				
+				System.out.println(" -- Reco deter -- ");
+				ReconnaissanceMot.reconnaissanceMot(deter);
+				System.out.println(" -- Reco comp -- ");
+				ReconnaissanceMot.reconnaissanceMot(comp);
 			} else {
 				System.out.println("Le fichier n'existe pas");
 			}
