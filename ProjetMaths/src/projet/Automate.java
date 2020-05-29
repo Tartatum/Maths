@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.TreeSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Automate implements Cloneable {
 	/*
@@ -18,19 +18,17 @@ public class Automate implements Cloneable {
 	 */
 	public int nbrsymbs;
 	public ArrayList<String> listSymbs;
-	public List<Integer> entrees;
-	public List<Integer> sorties;
+	public List<String> entrees;
+	public List<String> sorties;
 	public int nbrEtats;
-	public List<Integer> listEtats;
+	public List<String> listEtats;
 	public int nbrTrans;
 	public List<String[]> listTrans;
 	public String[][] tabTransition;
 
-
 	public Automate() {
-		
+
 	}
-	
 
 	public Automate(Automate a) {
 		this.nbrsymbs = a.nbrsymbs;
@@ -66,29 +64,29 @@ public class Automate implements Cloneable {
 
 			// La liste des états et le nombre d'états
 			String[] tabEtats = ligne.nextLine().split(" ");
-			listEtats = new ArrayList<Integer>();
+			listEtats = new ArrayList<String>();
 			for (String ent : tabEtats) {
-				listEtats.add(Integer.parseInt(ent));
+				listEtats.add(ent);
 			}
-			System.out.println("Rajout de l'état poubelle '-1'");
-			listEtats.add(-1);
+			System.out.println("Rajout de l'état poubelle 'P'");
+			listEtats.add("P");
 			nbrEtats = tabEtats.length + 1;
 			// La liste des entrées
-			entrees = new ArrayList<Integer>();
+			entrees = new ArrayList<String>();
 			String[] tabEnt = ligne.nextLine().split(" ");
 
 			for (String ent : tabEnt) {
-				entrees.add(Integer.parseInt(ent));
+				entrees.add(ent);
 			}
 
 			// La liste des sorties
-			sorties = new ArrayList<Integer>();
+			sorties = new ArrayList<String>();
 			String[] tabSort = ligne.nextLine().split(" ");
 
 			for (String sort : tabSort) {
-				sorties.add(Integer.parseInt(sort));
+				sorties.add(sort);
 			}
-			for (Integer string : sorties) {
+			for (String string : sorties) {
 				System.out.println(string);
 			}
 			// le nombre de transitions
@@ -101,7 +99,6 @@ public class Automate implements Cloneable {
 				}
 			}
 
-			
 			listTrans = new ArrayList<String[]>();
 
 			for (int i = 1; i <= nbrTrans; i++) {
@@ -109,8 +106,8 @@ public class Automate implements Cloneable {
 				String[] trans = ligneTrans.split("");
 
 				listTrans.add(trans); // la liste des transitions
-			
-				if (listSymbs.indexOf(trans[1]) == -1 ) {
+
+				if (listSymbs.indexOf(trans[1]) == -1) {
 
 					System.out.println("Apparition d'un symbole inconnu");
 					System.out.println("Sortie du programme.");
@@ -143,10 +140,9 @@ public class Automate implements Cloneable {
 			System.out.println();
 			System.out.print(listEtats.get(i) + " | ");
 			for (int j = 0; j < nbrsymbs; j++) {
-				if(tabTransition[i][j].equals("-1")) {
+				if (tabTransition[i][j].equals("-1")) {
 					System.out.print("P");
-				}
-				else {
+				} else {
 					System.out.print(tabTransition[i][j]);
 				}
 				if (j != nbrsymbs - 1) {
@@ -167,76 +163,75 @@ public class Automate implements Cloneable {
 				+ Arrays.toString(tabTransition) + "]";
 	}
 
-	
 	public List<String[]> transition_commancant_par(int etat) {
 		List<String[]> t = new ArrayList<String[]>();
 		for (String[] trans : this.listTrans) {
-			if(trans[0].equals(Integer.toString(etat))) {
-				//System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+			if (trans[0].equals(Integer.toString(etat))) {
+				// System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
 				t.add(trans);
 			}
 		}
 		return t;
 	}
-	
+
 	public List<String[]> transition_async_entree_symb(TreeSet<Integer> checking, String string) {
 		List<String[]> t = new ArrayList<String[]>();
-		for(int i : checking) {
-			for(String [] trans : listTrans) {
-				if(trans[1].equals(string) && (i == Integer.parseInt(trans[0]))) {
+		for (int i : checking) {
+			for (String[] trans : listTrans) {
+				if (trans[1].equals(string) && (i == Integer.parseInt(trans[0]))) {
 					t.add(trans);
 				}
 			}
 		}
 		return t;
 	}
-	
-	
+
 	public List<String[]> transition_epsilon_commancant_par(int etat) {
 		List<String[]> t = new ArrayList<String[]>();
 		for (String[] trans : transition_commancant_par(etat)) {
-			if(trans[1].equals("*")) {
-				//System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+			if (trans[1].equals("*")) {
+				// System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
 				t.add(trans);
 			}
 		}
 		return t;
 	}
-	
+
 	public boolean contient_entree(TreeSet<Integer> fe) {
-		for(int e: entrees) {
+		for (String e : entrees) {
 			for (int f : fe) {
-				//System.out.println(Integer.toString(e)+" == "+ Integer.toString(f) + " = " +(e == f) );
-				if(e == f){
+				// System.out.println(Integer.toString(e)+" == "+ Integer.toString(f) + " = "
+				// +(e == f) );
+				if (e.equals(f)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
-			
+
 	public void info() {
 		System.out.println("Information sur l'automate :");
-		System.out.println("Le nombre de symboles : "+ nbrsymbs);
+		System.out.println("Le nombre de symboles : " + nbrsymbs);
 		System.out.println("La liste des symboles : " + listSymbs);
 		System.out.println("La liste des entrées : " + entrees);
 		System.out.println("La liste des sorties : " + sorties);
 		System.out.println("Le nombre d'états : " + nbrEtats);
 		System.out.println("La liste des états : " + listEtats);
 		System.out.println("Le nombre de transitions : " + nbrTrans);
-		//System.out.println("La liste des transitions : ");
-		//for(String[] trans : listTrans) {
-		//		System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
-		//}
+		// System.out.println("La liste des transitions : ");
+		// for(String[] trans : listTrans) {
+		// System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+		// }
 
 	}
-	
-	public Object clone(){  
-	    try{  
-	        return super.clone();  
-	    }catch(Exception e){ 
-	        return null; 
-	    }
+
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (Exception e) {
+			return null;
+		}
 	}
-	
+
 }
