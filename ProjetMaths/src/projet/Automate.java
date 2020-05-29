@@ -151,6 +151,20 @@ public class Automate implements Cloneable {
 		}
 	}
 
+	public Automate(int nbrsymbs2, ArrayList<String> listSymbs2, List<String> newentrees, List<String> newsorties,
+			int nbrEtats2, List<String> listEtats2, int nbrTrans2, List<String[]> listTrans2,
+			String[][] tabTransition2) {
+		this.nbrsymbs = nbrsymbs2;
+		this.listSymbs = listSymbs2;
+		this.entrees = newentrees;
+		this.sorties = newsorties;
+		this.nbrEtats = nbrEtats2;
+		this.listEtats = listEtats2;
+		this.nbrTrans = nbrTrans2;
+		this.listTrans = listTrans2;
+		this.tabTransition = tabTransition2;
+	}
+
 	public String[] splitTrans(String ligne) {
 		String[] r = new String[3];
 		String[] test;
