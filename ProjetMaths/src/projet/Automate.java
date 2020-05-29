@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Scanner;
 
-@SuppressWarnings("unused")
-
-public class Automate {
+public class Automate implements Cloneable {
 	/*
 	 * Contenu de l'automate 
 	 * Le nombre de symboles (nbrsymbs)
@@ -32,7 +31,9 @@ public class Automate {
 	public List<String[]> listTrans;
 	public String[][] tabTransition;
 
-	public Automate() {}
+	public Automate() {
+		
+	}
 	
 	public Automate(File autoFile) {
 		try {
@@ -74,10 +75,8 @@ public class Automate {
 			sorties = new ArrayList<Integer>();
 			String[] tabSort = ligne.nextLine().split(" ");
 
-			for (String string : tabSort) {
-				for (String sort : tabEnt) {
-					sorties.add(Integer.parseInt(sort));
-				}
+			for (String sort : tabSort) {
+				sorties.add(Integer.parseInt(sort));
 			}
 
 			// le nombre de transitions
@@ -124,7 +123,12 @@ public class Automate {
 		for (int i = 0; i < nbrEtats; i++) {
 			System.out.println();
 			for (int j = 0; j < nbrsymbs; j++) {
-				System.out.print(tabTransition[i][j]);
+				if(tabTransition[i][j].equals("-1")) {
+					System.out.print("P");
+				}
+				else {
+					System.out.print(tabTransition[i][j]);
+				}
 				if (j != nbrsymbs - 1) {
 					System.out.print(" | ");
 				}
@@ -152,29 +156,63 @@ public class Automate {
 		return t;
 	}
 	
+	public List<String[]> transition_async_entree_symb(TreeSet<Integer> checking, String string) {
+		List<String[]> t = new ArrayList<String[]>();
+		for(int i : checking) {
+			for(String [] trans : listTrans) {
+				if(trans[1].equals(string) && (i == Integer.parseInt(trans[0]))) {
+					t.add(trans);
+				}
+			}
+		}
+		return t;
+	}
+	
+	
 	public List<String[]> transition_epsilon_commancant_par(int etat) {
 		List<String[]> t = new ArrayList<String[]>();
 		for (String[] trans : transition_commancant_par(etat)) {
 			if(trans[1].equals("*")) {
-				System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+				//System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
 				t.add(trans);
 			}
 		}
 		return t;
 	}
+	
+	public boolean contient_entree(TreeSet<Integer> fe) {
+		for(int e: entrees) {
+			for (int f : fe) {
+				//System.out.println(Integer.toString(e)+" == "+ Integer.toString(f) + " = " +(e == f) );
+				if(e == f){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 			
 	public void info() {
-		System.out.println("Automate :");
-		System.out.println(" Le nombre de symboles : "+ nbrsymbs);
+		System.out.println("Information sur l'automate :");
+		System.out.println("Le nombre de symboles : "+ nbrsymbs);
 		System.out.println("La liste des symboles : " + listSymbs);
 		System.out.println("La liste des entrées : " + entrees); 
 		System.out.println("La liste des sorties : "+ sorties);
 		System.out.println("Le nombre d'états : " + nbrEtats);
 		System.out.println("La liste des états : "+ listEtats);
 		System.out.println("Le nombre de transitions : " + nbrTrans);
-		System.out.println("La liste des transitions : ");
-		for(String[] trans : listTrans) {
-			System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
-		}
+		//System.out.println("La liste des transitions : ");
+		//for(String[] trans : listTrans) {
+		//		System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
+		//}
 	}
+	
+	public Object clone(){  
+	    try{  
+	        return super.clone();  
+	    }catch(Exception e){ 
+	        return null; 
+	    }
+	}
+	
 }
