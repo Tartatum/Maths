@@ -10,16 +10,11 @@ import java.util.Scanner;
 
 public class Automate implements Cloneable {
 	/*
-	 * Contenu de l'automate 
-	 * Le nombre de symboles (nbrsymbs)
-	 * La liste des symboles (listSymbs)
-	 * La liste des entrées (entrees) 
-	 * La liste des sorties (sorties)
-	 * Le nombre d'états (nbrEtats)
-	 * La liste des états (listEtats)
-	 * Le nombre de transitions (nbrTrans)
-	 * La liste des transitions (en chaîne de caractères "1a2")
-	 * Le tableau des transitions (
+	 * Contenu de l'automate Le nombre de symboles (nbrsymbs) La liste des symboles
+	 * (listSymbs) La liste des entrées (entrees) La liste des sorties (sorties) Le
+	 * nombre d'états (nbrEtats) La liste des états (listEtats) Le nombre de
+	 * transitions (nbrTrans) La liste des transitions (en chaîne de caractères
+	 * "1a2") Le tableau des transitions (
 	 */
 	public int nbrsymbs;
 	public ArrayList<String> listSymbs;
@@ -31,25 +26,39 @@ public class Automate implements Cloneable {
 	public List<String[]> listTrans;
 	public String[][] tabTransition;
 
+
 	public Automate() {
 		
 	}
 	
+
+	public Automate(Automate a) {
+		this.nbrsymbs = a.nbrsymbs;
+		this.listSymbs = a.listSymbs;
+		this.entrees = a.entrees;
+		this.sorties = a.sorties;
+		this.nbrEtats = a.nbrEtats;
+		this.listEtats = a.listEtats;
+		this.nbrTrans = a.nbrTrans;
+		this.listTrans = a.listTrans;
+		this.tabTransition = a.tabTransition;
+	}
+
 	public Automate(File autoFile) {
 		try {
-			
+
 			System.out.println("---------- Création de l'automate ----------");
 			// Symboles
 			@SuppressWarnings("resource")
-			
+
 			/*
-			 * Lecture du fichier 
+			 * Lecture du fichier
 			 */
 			Scanner ligne = new Scanner(autoFile);
-			String[] tabsymb = ligne.nextLine().split(" "); 
+			String[] tabsymb = ligne.nextLine().split(" ");
 			// System.out.println(tabsymb.length);
 			nbrsymbs = tabsymb.length; // le nombre de symboles via la liste
-			
+
 			listSymbs = new ArrayList<String>(); // La liste des symboles
 			for (String string : tabsymb) {
 				listSymbs.add(string);
@@ -58,11 +67,12 @@ public class Automate implements Cloneable {
 			// La liste des états et le nombre d'états
 			String[] tabEtats = ligne.nextLine().split(" ");
 			listEtats = new ArrayList<Integer>();
-			nbrEtats = tabEtats.length;
 			for (String ent : tabEtats) {
 				listEtats.add(Integer.parseInt(ent));
 			}
-
+			System.out.println("Rajout de l'état poubelle '-1'");
+			listEtats.add(-1);
+			nbrEtats = tabEtats.length + 1;
 			// La liste des entrées
 			entrees = new ArrayList<Integer>();
 			String[] tabEnt = ligne.nextLine().split(" ");
@@ -70,7 +80,7 @@ public class Automate implements Cloneable {
 			for (String ent : tabEnt) {
 				entrees.add(Integer.parseInt(ent));
 			}
-			
+
 			// La liste des sorties
 			sorties = new ArrayList<Integer>();
 			String[] tabSort = ligne.nextLine().split(" ");
@@ -78,24 +88,30 @@ public class Automate implements Cloneable {
 			for (String sort : tabSort) {
 				sorties.add(Integer.parseInt(sort));
 			}
-
+			for (Integer string : sorties) {
+				System.out.println(string);
+			}
 			// le nombre de transitions
 			nbrTrans = Integer.parseInt(ligne.nextLine());
-			
+
 			tabTransition = new String[nbrEtats][nbrsymbs];
 			for (int i = 0; i < nbrEtats; i++) {
 				for (int j = 0; j < nbrsymbs; j++) {
 					tabTransition[i][j] = "-";
 				}
 			}
+
 			
 			listTrans = new ArrayList<String[]>();
+
 			for (int i = 1; i <= nbrTrans; i++) {
 				String ligneTrans = ligne.nextLine();
 				String[] trans = ligneTrans.split("");
+
 				listTrans.add(trans); // la liste des transitions
 			
 				if (listSymbs.indexOf(trans[1]) == -1 ) {
+
 					System.out.println("Apparition d'un symbole inconnu");
 					System.out.println("Sortie du programme.");
 					return;
@@ -119,9 +135,13 @@ public class Automate implements Cloneable {
 
 	public void Affichage() {
 		System.out.println("---------- Affichage de l'automate ----------");
-
+		System.out.print("    ");
+		for (String nom : listSymbs) {
+			System.out.print(nom + "   ");
+		}
 		for (int i = 0; i < nbrEtats; i++) {
 			System.out.println();
+			System.out.print(listEtats.get(i) + " | ");
 			for (int j = 0; j < nbrsymbs; j++) {
 				if(tabTransition[i][j].equals("-1")) {
 					System.out.print("P");
@@ -133,7 +153,9 @@ public class Automate implements Cloneable {
 					System.out.print(" | ");
 				}
 			}
+
 		}
+
 		System.out.println();
 		System.out.println();
 	}
@@ -144,6 +166,7 @@ public class Automate implements Cloneable {
 				+ sorties + ", nbrEtats=" + nbrEtats + ", nbrTrans=" + nbrTrans + ", tabTransition="
 				+ Arrays.toString(tabTransition) + "]";
 	}
+
 	
 	public List<String[]> transition_commancant_par(int etat) {
 		List<String[]> t = new ArrayList<String[]>();
@@ -196,15 +219,16 @@ public class Automate implements Cloneable {
 		System.out.println("Information sur l'automate :");
 		System.out.println("Le nombre de symboles : "+ nbrsymbs);
 		System.out.println("La liste des symboles : " + listSymbs);
-		System.out.println("La liste des entrées : " + entrees); 
-		System.out.println("La liste des sorties : "+ sorties);
+		System.out.println("La liste des entrées : " + entrees);
+		System.out.println("La liste des sorties : " + sorties);
 		System.out.println("Le nombre d'états : " + nbrEtats);
-		System.out.println("La liste des états : "+ listEtats);
+		System.out.println("La liste des états : " + listEtats);
 		System.out.println("Le nombre de transitions : " + nbrTrans);
 		//System.out.println("La liste des transitions : ");
 		//for(String[] trans : listTrans) {
 		//		System.out.println(trans[0] +" -> " + trans[1] +" -> "+ trans[2]);
 		//}
+
 	}
 	
 	public Object clone(){  

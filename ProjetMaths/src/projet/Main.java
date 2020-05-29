@@ -21,8 +21,12 @@ public class Main {
 				System.out.println("Le fichier éxiste.");
 				Automate original = new Automate(autoFile);
 				original.Affichage();
+
 				Determinisation_completion.algorithm(original);
-				} else {
+        Automate comp = Complementaire.Comp(original);
+				original.info();
+				comp.info();
+				} else { 
 				System.out.println("Le fichier n'existe pas");
 			}
 		}
