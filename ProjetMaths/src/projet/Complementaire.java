@@ -2,12 +2,19 @@ package projet;
 
 public class Complementaire {
 
-	public static Automate Comp(Automate A) {
-		Automate Aret = new Automate(A);
-		Aret.sorties = Aret.listEtats;
-		for (String removed : A.sorties) {
-			Aret.sorties.remove(removed);
+	static Automate Comp(Automate AF) {
+		System.out.println("--------- Entrée de la création d'un automate complémentaire ----------");
+		Automate Aret = new Automate(AF);
+		Aret.sorties.clear();
+		for (String etat : Aret.listEtats) {
+			Aret.sorties.add(etat);
 		}
+		System.out.println("--------- Ajout et suppression des anciennes sorties ----------");
+		for (String sortiesOri : AF.sorties) {
+			Aret.sorties.remove(sortiesOri);
+		}
+		System.out.println("--------- Affichage ----------");
+		Aret.info();
 		System.out.println();
 		return Aret;
 	}
