@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-public class Standardisation {
+public class L3New_MpI_25_Standardisation {
 	
-	public static void standardisation(Automate a) {
+	public static void standardisation(L3New_MpI_25_Automate a) {
 		//test si l'automate est standard
 		boolean aucun_retour_sur_entree = false;
 		//test de l'entree unique

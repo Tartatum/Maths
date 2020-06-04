@@ -6,11 +6,11 @@ import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
-public class Determinisation_completion {
+public class L3New_MpI_25_Determinisation_completion {
 
 	
-	static Automate algorithm(Automate AF) {
-		Automate AFDC;
+	static L3New_MpI_25_Automate algorithm(L3New_MpI_25_Automate AF) {
+		L3New_MpI_25_Automate AFDC;
 		System.out.println("--- D�but de la d�terminisation et la compl�tion de l'automate ---");
 		System.out.println("L'automate est-il un automate asynchrone ? ");
 		if (est_un_automate_asynchrone(AF)) {
@@ -40,14 +40,14 @@ public class Determinisation_completion {
 		return AFDC;
 	}
 	
-	private static void afficher_automate_deterministe_complete(Automate AFDC) {
+	private static void afficher_automate_deterministe_complete(L3New_MpI_25_Automate AFDC) {
 		AFDC.info();
 		AFDC.Affichage();
 	}
 
 	
-	private static Automate completion(Automate AF) {
-		Automate completionAFD = (Automate) AF.clone();
+	private static L3New_MpI_25_Automate completion(L3New_MpI_25_Automate AF) {
+		L3New_MpI_25_Automate completionAFD = (L3New_MpI_25_Automate) AF.clone();
 		String[][] tabTransition = null;
 		if(!AF.listEtats.contains("P")) {
 			
@@ -81,7 +81,7 @@ public class Determinisation_completion {
 		return completionAFD;
 	}
 
-	private static boolean est_un_automate_deterministe(Automate AF) {
+	private static boolean est_un_automate_deterministe(L3New_MpI_25_Automate AF) {
 		// Condition de l'unicit� de l'entr�e  
 		if(AF.entrees.size() != 1) {
 			System.out.println("L'automate n'est pas d�terministe car il y a plusieurs entr�es : " + AF.entrees );
@@ -102,7 +102,7 @@ public class Determinisation_completion {
 		return true;
 	}
 
-	private static boolean est_un_automate_complet(Automate AF) {
+	private static boolean est_un_automate_complet(L3New_MpI_25_Automate AF) {
 		for(int i = 0; i < AF.nbrEtats; i++) {
 			for(int k = 0; k < AF.nbrsymbs;k++) {
 				if(AF.tabTransition[i][k].equals("-")) {
@@ -115,7 +115,7 @@ public class Determinisation_completion {
 		return true;
 	}
 
-	static boolean est_un_automate_asynchrone(Automate AF) {
+	static boolean est_un_automate_asynchrone(L3New_MpI_25_Automate AF) {
 		List<String[]> epsilon = new ArrayList<String[]>();
 		int async = 0;
 		for(String[] trans : AF.listTrans ) {
@@ -137,7 +137,7 @@ public class Determinisation_completion {
 		}
 	}
 	
-	static Automate determinisation_et_completion_automate_asynchrone(Automate AF) {
+	static L3New_MpI_25_Automate determinisation_et_completion_automate_asynchrone(L3New_MpI_25_Automate AF) {
 		// Obtient la liste des fermetures epsilons;
 		List<TreeSet<String>> ferm_ep = fermeture_epsilon(AF);
 		// Avoir l'état initial
@@ -231,7 +231,7 @@ public class Determinisation_completion {
 		
 		
 		
-		Automate AFDC = (Automate) AF.clone();
+		L3New_MpI_25_Automate AFDC = (L3New_MpI_25_Automate) AF.clone();
 		AFDC.nbrsymbs = AFDC.nbrsymbs-1;
 		AFDC.listSymbs.remove(AFDC.nbrsymbs);
 		AFDC.entrees = convert_HashSet_to_List_index(entrees, listEtats);
@@ -244,7 +244,7 @@ public class Determinisation_completion {
 		return AFDC;
 	}
 	
-	static void setTabTrans(Automate AF) {
+	static void setTabTrans(L3New_MpI_25_Automate AF) {
 		List<String[]> lT = new ArrayList<String[]>();
 		for(int i = 0 ; i < AF.nbrEtats;i++) {
 			for(int k = 0; k < AF.nbrsymbs;k++) {
@@ -255,7 +255,7 @@ public class Determinisation_completion {
 		AF.listTrans = lT;
 	}
 	
-	static Automate determinisation_et_completion_automate_synchrone(Automate AF) {
+	static L3New_MpI_25_Automate determinisation_et_completion_automate_synchrone(L3New_MpI_25_Automate AF) {
 		
 		// Etat initial
 		TreeSet<String> entree = new TreeSet<String>();
@@ -331,7 +331,7 @@ public class Determinisation_completion {
 		}
 		
 		//System.out.println("Sorties : " + sorties);
-		Automate AFDC = (Automate) AF.clone();
+		L3New_MpI_25_Automate AFDC = (L3New_MpI_25_Automate) AF.clone();
 		AFDC.nbrsymbs = AFDC.nbrsymbs;
 		AFDC.entrees = convert_HashSet_to_List_index(entrees, listEtats);
 		AFDC.sorties = convert_HashSet_to_List_index(sorties, listEtats);
@@ -425,7 +425,7 @@ public class Determinisation_completion {
 		return r;
 	}
 	
-	static List<TreeSet<String>> fermeture_epsilon(Automate AF){
+	static List<TreeSet<String>> fermeture_epsilon(L3New_MpI_25_Automate AF){
 		List<TreeSet<String>> fe = new ArrayList<TreeSet<String>>();
 		for(String etat : AF.listEtats) { 
 			//TreeSet<Integer> ferm_epsil= new TreeSet<Integer>();

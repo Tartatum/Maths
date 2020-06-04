@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 
-public class Automate implements Cloneable {
+public class L3New_MpI_25_Automate implements Cloneable {
 	/*
 	 * Contenu de l'automate Le nombre de symboles (nbrsymbs) La liste des symboles
 	 * (listSymbs) La liste des entr�es (entrees) La liste des sorties (sorties) Le
@@ -26,11 +26,11 @@ public class Automate implements Cloneable {
 	public List<String[]> listTrans;
 	public String[][] tabTransition;
 
-	public Automate() {
+	public L3New_MpI_25_Automate() {
 
 	}
 
-	public Automate(Automate a) {
+	public L3New_MpI_25_Automate(L3New_MpI_25_Automate a) {
 		this.nbrsymbs = a.nbrsymbs;
 		listSymbs = new ArrayList<String>();
 		for (String string : a.listSymbs) {
@@ -59,7 +59,7 @@ public class Automate implements Cloneable {
 		this.tabTransition = a.tabTransition;
 	}
 
-	public Automate(File autoFile) {
+	public L3New_MpI_25_Automate(File autoFile) {
 		try {
 
 			System.out.println("---------- Cr�ation de l'automate ----------");
@@ -151,7 +151,7 @@ public class Automate implements Cloneable {
 		}
 	}
 
-	public Automate(int nbrsymbs2, ArrayList<String> listSymbs2, List<String> newentrees, List<String> newsorties,
+	public L3New_MpI_25_Automate(int nbrsymbs2, ArrayList<String> listSymbs2, List<String> newentrees, List<String> newsorties,
 			int nbrEtats2, List<String> listEtats2, int nbrTrans2, List<String[]> listTrans2,
 			String[][] tabTransition2) {
 		this.nbrsymbs = nbrsymbs2;

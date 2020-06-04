@@ -1,10 +1,10 @@
 package projet;
 
-public class Complementaire {
+public class L3New_MpI_25_Complementaire {
 
-	static Automate Comp(Automate AF) {
+	static L3New_MpI_25_Automate Comp(L3New_MpI_25_Automate AF) {
 		System.out.println("--------- Entrée de la création d'un automate complémentaire ----------");
-		Automate Aret = new Automate(AF);
+		L3New_MpI_25_Automate Aret = new L3New_MpI_25_Automate(AF);
 		Aret.sorties.clear();
 		for (String etat : Aret.listEtats) {
 			Aret.sorties.add(etat);

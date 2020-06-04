@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Minimalisation {
+public class L3New_MpI_25_Minimalisation {
 
-	public static Automate Minimal(Automate automate) {
+	public static L3New_MpI_25_Automate Minimal(L3New_MpI_25_Automate automate) {
 
 		String[][] tabT = automate.tabTransition;
 
@@ -277,7 +277,7 @@ public class Minimalisation {
 			}
 		}
 		System.out.println();
-		Automate automateMin = new Automate(nbrsymbs, listSymbs, newentrees, newsorties, nbrEtats, listEtats, nbrTrans,
+		L3New_MpI_25_Automate automateMin = new L3New_MpI_25_Automate(nbrsymbs, listSymbs, newentrees, newsorties, nbrEtats, listEtats, nbrTrans,
 				listTrans, tabTransition);
 		return automateMin;
 	}

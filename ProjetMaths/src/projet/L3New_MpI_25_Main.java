@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class Main {
+public class L3New_MpI_25_Main {
 
 	public static void main(String[] args) throws IOException {
 		boolean prog = true;
@@ -21,31 +21,31 @@ public class Main {
 				
 				System.out.println("Le fichier éxiste.");
 				
-				Automate original = new Automate(autoFile);
+				L3New_MpI_25_Automate original = new L3New_MpI_25_Automate(autoFile);
 				original.Affichage();
 
-				Automate deter = Determinisation_completion.algorithm(original);
+				L3New_MpI_25_Automate deter = L3New_MpI_25_Determinisation_completion.algorithm(original);
 				
-				Automate comp = Complementaire.Comp(deter);
+				L3New_MpI_25_Automate comp = L3New_MpI_25_Complementaire.Comp(deter);
 				System.out.println(" -- Comp -- ");
 				comp.info();
 				comp.Affichage();
 				
-				Automate mini = Minimalisation.Minimal(deter);
+				L3New_MpI_25_Automate mini = L3New_MpI_25_Minimalisation.Minimal(deter);
 				System.out.println(" -- Mini -- ");
 				mini.info();
 				mini.Affichage();
 				
-				Automate copy = new Automate(deter);
+				L3New_MpI_25_Automate copy = new L3New_MpI_25_Automate(deter);
 				System.out.println(" -- Stand -- ");
-				Standardisation.standardisation(copy);
+				L3New_MpI_25_Standardisation.standardisation(copy);
 				copy.info();
 				copy.Affichage();
 				
 				System.out.println(" -- Reco deter -- ");
-				ReconnaissanceMot.reconnaissanceMot(deter);
+				L3New_MpI_25_ReconnaissanceMot.reconnaissanceMot(deter);
 				System.out.println(" -- Reco comp -- ");
-				ReconnaissanceMot.reconnaissanceMot(comp);
+				L3New_MpI_25_ReconnaissanceMot.reconnaissanceMot(comp);
 			} else {
 				System.out.println("Le fichier n'existe pas");
 			}
