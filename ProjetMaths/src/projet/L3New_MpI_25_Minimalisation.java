@@ -128,6 +128,7 @@ public class L3New_MpI_25_Minimalisation {
 			}
 		}
 		while (!ismin) {
+			System.out.println("---------------------------------------");
 			List<List<Integer>> nlist = new ArrayList<List<Integer>>();
 			HashMap ngroupe = new HashMap();
 			for (List<Integer> k : listGroupe) {
@@ -277,8 +278,8 @@ public class L3New_MpI_25_Minimalisation {
 			}
 		}
 		System.out.println();
-		L3New_MpI_25_Automate automateMin = new L3New_MpI_25_Automate(nbrsymbs, listSymbs, newentrees, newsorties, nbrEtats, listEtats, nbrTrans,
-				listTrans, tabTransition);
+		L3New_MpI_25_Automate automateMin = new L3New_MpI_25_Automate(nbrsymbs, listSymbs, newentrees, newsorties,
+				nbrEtats, listEtats, nbrTrans, listTrans, tabTransition);
 		return automateMin;
 	}
 
